@@ -39,6 +39,7 @@ class StackPointer(object):
 	def __repr__(self):
 		return 'SP({})'.format(hex(self.offset))
 
+
 class SymState(object):
 	def __init__(self, cfg, elf):
 		self.cfg = cfg
@@ -52,23 +53,10 @@ class SymState(object):
 		self.path_constraints = ()
 
 		self.OF = False
-		self.CF = False
 		self.SF = False
 		self.ZF = False
 
 		self.regs[X86_REG_RSP] = StackPointer(0)
-
-	def __deepcopy__(self, memo):
-		cls = self.__class__
-		result = cls.__new__(cls)
-		memo[id(self)] = result
-		for k, v in self.__dict__.items():
-			if k in ['cfg', 'elf']:
-				setattr(result, k, v)
-			else:
-				setattr(result, k, deepcopy(v, memo))
-		return result
-
 
 	def __eq__(self, other):
 		if isinstance(other, type(self)):
@@ -89,9 +77,6 @@ class SymState(object):
 
 	def is_get_int(self, target):
 		return self.is_call(target, 'get_int')
-
-	def is_get_char(self, target):
-		return self.is_call(target, 'get_char')
 
 	def is_error(self, target):
 		return self.is_call(target, 'error')

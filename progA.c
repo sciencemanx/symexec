@@ -7,8 +7,12 @@ void main() {
 	a = get_int();
 	b = get_int();
 
-	if (b > 10 || b == 0) return;
-	// if (a % 2 == 0) return;
+
+	if (a < 0 || b < 0) return;
+	if (b > 10) return;
+
+	if (a % 2 == 0) return;
+
 	if (a + b == 10) {
 		if (a < b) error();
 	}
