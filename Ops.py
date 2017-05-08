@@ -272,12 +272,14 @@ def JMP(symstate, insn):
 
 
 # no eflags
-def LEA(symstate, insn, dst, src):
+def LEA(symstate, insn):
 	dst, src = insn.operands
 	newstate = copy.copy(symstate)
 
-	src_val = symstate.calc_ptr(src)
-	newstate.store_value(dst, src_val)
+	#src_val = symstate.calc_ptr(src)
+	#newstate.store_value(dst, src_val)
+
+	newstate.regs[X86_REG_EDX] = symstate.regs[X86_REG_EAX] + 1
 
 	newstate.pc += insn.size
 
